@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "clouddb_sdv_2022": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7015",
+      "launchBrowser": false
+    }
+  }
+}
