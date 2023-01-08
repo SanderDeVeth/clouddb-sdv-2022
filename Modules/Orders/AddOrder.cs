@@ -1,5 +1,7 @@
+using System.Dynamic;
 using System.Net;
 using clouddb_sdv_2022.Modules.Orders;
+using clouddb_sdv_2022.Modules.Orders.Models;
 using clouddb_sdv_2022_fa.Modules.Orders;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
@@ -9,27 +11,39 @@ using Microsoft.Extensions.Logging;
 
 namespace Company.Function
 {
-    public class OrderController : Controller
+    public class AddOrder
     {
-        private IValidator<Order> _orderValidator;
-        private IOrderRepository _repository;
+        private readonly IOrderService _orderService;
 
-        public OrderController(IValidator<Order> orderValidator, IOrderRepository repository)
+        public AddOrder(IOrderService orderService)
         {
-            _orderValidator = orderValidator;
-            _repository = repository;
+            _orderService = orderService;
         }
 
         [Function("AddOrder")]
-        public static async Task<HttpResponseData> RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData req)
+        public async Task<HttpResponseData> RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData req)
         {
-            var order = await req.ReadFromJsonAsync<Order>();
-            return null;
+            var postOrder = await req.ReadFromJsonAsync<PostOrderDTO>();
+            dynamic response;
+            if(postOrder == null)
+            {
+                response = req.CreateResponse(HttpStatusCode.BadRequest);
+                await response.WriteAsJsonAsync(new { message = "Invalid request body" });
+                return response;
+            }
 
+            // if(!_postOrderValidator.Validate(postOrder).IsValid)
+            // {
+            //     response = req.CreateResponse(HttpStatusCode.BadRequest);
+            //     await response.WriteAsJsonAsync(postOrder);
+            //     return response;
+            // }
 
-            // await _db.CreateAsync(order);
-            // return await req.CreatedAtResponse(nameof(OrdersFindById), new { id = order.Id }, order);
+            // Happy path
+            await _orderService.PostOrderAsync(postOrder);
+            response = req.CreateResponse(HttpStatusCode.Created);
+            await response.WriteAsJsonAsync(postOrder);
+            return response;
         }
-
     }
 }

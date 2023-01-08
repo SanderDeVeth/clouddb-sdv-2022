@@ -8,13 +8,14 @@ var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults()
     .ConfigureServices(services =>
     {
-        services.AddLogging();
-
         // add endpoints
         services.AddScoped<ProcessNewOrders>();
+        services.AddScoped<PostReview>();
+        services.AddScoped<AddOrder>();
 
         // add validators
-        services.AddScoped<IValidator<Customer>, CustomerValidator>();
+        // services.AddScoped<IValidator<Customer>, CustomerValidator>();
+        // services.AddScoped<IValidator<PostOrderDTO>, PostOrderValidator>();
     })
     .Build();
 

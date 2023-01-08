@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using clouddb_sdv_2022_fa.Modules.Customers;
 using clouddb_sdv_2022_fa.Modules.Orders;
+using clouddb_sdv_2022_fa.Modules.Orders.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace clouddb_sdv_2022

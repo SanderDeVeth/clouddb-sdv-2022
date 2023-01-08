@@ -9,15 +9,8 @@ namespace clouddb_sdv_2022_fa.Modules.Orders
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public string imageBlob { get; set; }
-        public virtual List<Review> Reviews { get; set; }
-
-        public Product(string name, string description, decimal price)
-        {
-            Name = name;
-            Description = description;
-            Price = price;
-        }
+        public string ImageBlob { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
 
         public class ProductValidator : AbstractValidator<Product>
         {
@@ -26,7 +19,7 @@ namespace clouddb_sdv_2022_fa.Modules.Orders
                 RuleFor(p => p.Name).Length(0, 30).NotEmpty();
                 RuleFor(p => p.Description).Length(0, 1000).NotEmpty();
                 RuleFor(p => p.Price).GreaterThan(0);
-                RuleFor(p => p.imageBlob).NotEmpty();
+                RuleFor(p => p.ImageBlob).NotEmpty();
             }
         }
     }

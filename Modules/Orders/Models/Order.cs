@@ -6,23 +6,18 @@ using System.Threading.Tasks;
 using clouddb_sdv_2022_fa.Modules.Customers;
 using System.Text.Json.Serialization;
 using FluentValidation;
+using clouddb_sdv_2022;
 
-namespace clouddb_sdv_2022_fa.Modules.Orders
+namespace clouddb_sdv_2022_fa.Modules.Orders.Models
 {
-    public class Order
+    public class Order : IBaseEntity
     {
         public Guid Id { get; set; }
         public virtual Customer Customer { get; set; }
         public Guid CustomerId { get; set; }
         public DateOnly OrderDate { get; set; }
         public DateOnly? ShippingDate { get; set; }
-        public virtual List<OrderItem> Items { get; set; }
-
-        public Order(Customer customer)
-        {
-            Customer = customer;
-            Items = new List<OrderItem>();
-        }
+        public virtual ICollection<OrderItem> Items { get; set; }
 
         public bool OrderProcessed()
         {
