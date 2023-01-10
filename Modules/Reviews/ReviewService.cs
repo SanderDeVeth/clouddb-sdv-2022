@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using clouddb_sdv_2022.Modules.Customers;
-using clouddb_sdv_2022_fa.Modules.Reviews;
-using Company.Function;
 
 namespace clouddb_sdv_2022.Modules.Reviews
 {
@@ -19,29 +13,58 @@ namespace clouddb_sdv_2022.Modules.Reviews
             _customerRepository = customerRepository;
         }
 
+        public async Task CommitAsync()
+        {
+            await _reviewRepository.CommitAsync();
+            return;
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            Review deleteReview = new Review{
+                Id = id
+            };
+            _reviewRepository.Delete(deleteReview);
+            await _reviewRepository.CommitAsync();
+            return;
+        }
+
+        public async Task<Review> GetAsync(Guid id)
+        {
+            return await _reviewRepository.GetSingleAsync(id);
+        }
+
+        public async Task<Review> UpdateAsync(UpdateReviewDTO entity, Guid id)
+        {
+            Review replaceReview = await _reviewRepository.GetSingleAsync(id);
+            if (entity.Rating != null) replaceReview.Rating = (int)entity.Rating;
+            if (entity.ReviewText != null) replaceReview.ReviewText = entity.ReviewText;
+
+            _reviewRepository.Update(replaceReview);
+            await _reviewRepository.CommitAsync();
+            return replaceReview;
+        }
+
         public async Task<Review> PostReviewAsync(PostReviewDTO data)
         {
-            var Customer = await _customerRepository.GetSingleAsync(data.CustomerId);
-            if (Customer == null)
+            var customer = await _customerRepository.GetSingleAsync(data.CustomerId);
+            if (customer == null)
             {
                 throw new Exception("Customer not found");
             }
-            
+
             var Review = new Review
             {
                 Id = Guid.NewGuid(),
-                Customer = Customer,
-                CustomerId = Customer.Id,
+                Customer = customer,
+                CustomerId = customer.Id,
                 ReviewDate = DateOnly.FromDateTime(DateTime.Now),
                 Rating = data.Rating,
                 ReviewText = data.ReviewText,
             };
-
-            Customer.Reviews.Add(Review);
+            customer.Reviews.Add(Review);
             _reviewRepository.Add(Review);
             await _customerRepository.CommitAsync();
-            await _reviewRepository.CommitAsync();
-
             return Review;
         }
     }

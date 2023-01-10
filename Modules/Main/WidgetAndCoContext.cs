@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using clouddb_sdv_2022_fa.Modules.Customers;
-using clouddb_sdv_2022_fa.Modules.Orders;
-using clouddb_sdv_2022_fa.Modules.Orders.Models;
+using clouddb_sdv_2022.Modules.Customers;
+using clouddb_sdv_2022.Modules.Orders;
+using clouddb_sdv_2022.Modules.OrderItems;
+using clouddb_sdv_2022.Modules.Reviews;
+using clouddb_sdv_2022.Modules.Products;
 using Microsoft.EntityFrameworkCore;
 
 namespace clouddb_sdv_2022
@@ -13,12 +15,16 @@ namespace clouddb_sdv_2022
     {
         public DbSet<Customer>? Customers { get; set; }
         public DbSet<Order>? Orders { get; set; }
+        public DbSet<OrderItem>? OrderItems { get; set; }
+        public DbSet<Review>? Reviews { get; set; }
+        public DbSet<Product>? Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customer>().ToContainer("Customers");
             modelBuilder.Entity<Order>().ToContainer("Orders");
             modelBuilder.Entity<Product>().ToContainer("Products");
+            modelBuilder.Entity<OrderItem>().ToContainer("OrderItems");
             modelBuilder.Entity<Review>().ToContainer("Reviews");
 
             modelBuilder.Entity<Customer>()
@@ -39,6 +45,12 @@ namespace clouddb_sdv_2022
                 .HasOne(i => i.Product);
             modelBuilder.Entity<OrderItem>()
                 .HasOne(i => i.Order);
+
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.Product);
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.Customer);
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)

@@ -1,9 +1,9 @@
+using clouddb_sdv_2022.Modules.Main;
 using clouddb_sdv_2022.Modules.Reviews;
-using clouddb_sdv_2022_fa.Modules.Reviews;
 
-namespace Company.Function
+namespace clouddb_sdv_2022.Modules.Reviews
 {
-    public interface IReviewService
+    public interface IReviewService : IBaseService<Review>
     {
         Task<Review> PostReviewAsync(PostReviewDTO data);
     }

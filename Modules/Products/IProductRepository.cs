@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace clouddb_sdv_2022.Modules.Orders.Models
+namespace clouddb_sdv_2022.Modules.Products
 {
-    public class OrderRepository
+    public interface IProductRepository : IBaseRepository<Product>
     {
-        
+
     }
 }

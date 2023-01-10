@@ -1,11 +1,8 @@
 using System.Net;
-using clouddb_sdv_2022.Modules.Reviews;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.Extensions.Logging;
 
-namespace Company.Function
+namespace clouddb_sdv_2022.Modules.Reviews
 {
     public class PostReview
     {

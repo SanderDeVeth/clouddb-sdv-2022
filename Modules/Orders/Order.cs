@@ -1,14 +1,7 @@
-using System.Xml.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using clouddb_sdv_2022_fa.Modules.Customers;
-using System.Text.Json.Serialization;
-using FluentValidation;
-using clouddb_sdv_2022;
+using clouddb_sdv_2022.Modules.Customers;
+using clouddb_sdv_2022.Modules.OrderItems;
 
-namespace clouddb_sdv_2022_fa.Modules.Orders.Models
+namespace  clouddb_sdv_2022.Modules.Orders
 {
     public class Order : IBaseEntity
     {
@@ -32,15 +25,10 @@ namespace clouddb_sdv_2022_fa.Modules.Orders.Models
         {
             return Items.Sum(i => i.GetTotal());
         }
+    }
 
-        public class OrderValidator : AbstractValidator<Order>
-        {
-            public OrderValidator()
-            {
-                RuleFor(o => o.CustomerId).NotNull();
-                RuleFor(o => o.OrderDate).NotNull();
-                RuleFor(o => o.Items).NotEmpty();
-            }
-        }
+    public class PostOrderDTO
+    {
+        public Guid CustomerId { get; set; }
     }
 }

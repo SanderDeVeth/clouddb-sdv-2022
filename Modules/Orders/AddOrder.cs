@@ -1,15 +1,8 @@
-using System.Dynamic;
 using System.Net;
-using clouddb_sdv_2022.Modules.Orders;
-using clouddb_sdv_2022.Modules.Orders.Models;
-using clouddb_sdv_2022_fa.Modules.Orders;
-using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.Extensions.Logging;
 
-namespace Company.Function
+namespace clouddb_sdv_2022.Modules.Orders
 {
     public class AddOrder
     {
@@ -31,13 +24,6 @@ namespace Company.Function
                 await response.WriteAsJsonAsync(new { message = "Invalid request body" });
                 return response;
             }
-
-            // if(!_postOrderValidator.Validate(postOrder).IsValid)
-            // {
-            //     response = req.CreateResponse(HttpStatusCode.BadRequest);
-            //     await response.WriteAsJsonAsync(postOrder);
-            //     return response;
-            // }
 
             // Happy path
             await _orderService.PostOrderAsync(postOrder);

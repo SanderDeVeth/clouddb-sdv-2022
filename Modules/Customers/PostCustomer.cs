@@ -4,7 +4,7 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 
-namespace Company.Function
+namespace clouddb_sdv_2022.Modules.Customers
 {
     public class PostCustomer
     {
@@ -27,7 +27,7 @@ namespace Company.Function
                 return response;
             }
 
-            await _customerService.PostCustomerAsync(postCustomer);
+            await _customerService.AddCustomerAsync(postCustomer);
             response = req.CreateResponse(HttpStatusCode.Created);
             await response.WriteAsJsonAsync(postCustomer);
             return response;

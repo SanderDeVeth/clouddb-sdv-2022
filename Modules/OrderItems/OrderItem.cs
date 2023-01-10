@@ -1,9 +1,7 @@
-using System.Text.Json.Serialization;
-using clouddb_sdv_2022;
-using clouddb_sdv_2022_fa.Modules.Orders.Models;
-using FluentValidation;
+using clouddb_sdv_2022.Modules.Orders;
+using clouddb_sdv_2022.Modules.Products;
 
-namespace clouddb_sdv_2022_fa.Modules.Orders
+namespace clouddb_sdv_2022.Modules.OrderItems
 {
     public class OrderItem : IBaseEntity
     {
@@ -26,16 +24,26 @@ namespace clouddb_sdv_2022_fa.Modules.Orders
         {
             return Quantity * UnitPrice;
         }
+    }
 
-        public class OrderItemValidator : AbstractValidator<OrderItem>
-        {
-            public OrderItemValidator()
-            {
-                RuleFor(i => i.Quantity).GreaterThan(0);
-                RuleFor(i => i.UnitPrice).GreaterThan(0);
-                RuleFor(i => i.ProductId).NotNull();
-                RuleFor(i => i.OrderId).NotNull();
-            }
-        }
+    public class OrderItemDTO
+    {
+        public Guid OrderId { get; set; }
+        public Guid ProductId { get; set; }
+        public int Quantity { get; set; }
+    }
+
+    public class UpdateOrderItemDTO
+    {
+        public Guid OrderId { get; set; }
+        public Guid ProductId { get; set; }
+        public int? Quantity { get; set; }
+    }
+
+    public class AddOrderItemDTO
+    {
+        public Guid OrderId { get; set; }
+        public Guid ProductId { get; set; }
+        public int Quantity { get; set; }
     }
 }

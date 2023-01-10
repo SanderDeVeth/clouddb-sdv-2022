@@ -2,7 +2,7 @@ using System;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 
-namespace Company.Function
+namespace clouddb_sdv_2022.Modules.Orders
 {
     public class ProcessNewOrders
     {
