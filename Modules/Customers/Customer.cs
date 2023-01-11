@@ -15,7 +15,7 @@ namespace  clouddb_sdv_2022.Modules.Customers
         public virtual ICollection<Review>? Reviews { get; set; }
     }
 
-    public class PostCustomerDTO
+    public class AddCustomerDTO
     {
         public string Name { get; set; }
         [EmailAddress]

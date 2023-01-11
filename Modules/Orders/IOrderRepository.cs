@@ -8,6 +8,5 @@ namespace clouddb_sdv_2022.Modules.Orders
 {
     public interface IOrderRepository : IBaseRepository<Order>
     {
-
     }
 }

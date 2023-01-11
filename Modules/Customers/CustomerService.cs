@@ -14,26 +14,24 @@ namespace clouddb_sdv_2022.Modules.Customers
             _customerRepository = customerRepository;
         }
 
-        public async Task<Customer> AddCustomerAsync(PostCustomerDTO postCustomerDTO)
+        public async Task<Customer> AddCustomerAsync(AddCustomerDTO addCustomerDTO)
         {
             var customer = new Customer
             {
                 Id = Guid.NewGuid(),
-                Name = postCustomerDTO.Name,
-                EmailAddress = postCustomerDTO.EmailAddress,
-                DateOfBirth = postCustomerDTO.DateOfBirth,
+                Name = addCustomerDTO.Name,
+                EmailAddress = addCustomerDTO.EmailAddress,
+                DateOfBirth = addCustomerDTO.DateOfBirth,
             };
 
             _customerRepository.Add(customer);
             await _customerRepository.CommitAsync();
-
             return customer;
         }
 
         public async Task CommitAsync()
         {
             await _customerRepository.CommitAsync();
-            return;
         }
 
         public async Task DeleteAsync(Guid id)
@@ -43,7 +41,6 @@ namespace clouddb_sdv_2022.Modules.Customers
             };
             _customerRepository.Delete(deleteCustomer);
             await _customerRepository.CommitAsync();
-            return;
         }
 
         public async Task<Customer> GetAsync(Guid id)   
@@ -51,7 +48,7 @@ namespace clouddb_sdv_2022.Modules.Customers
             return await _customerRepository.GetSingleAsync(id);
         }
 
-        public async Task UpdateAsync(UpdateCustomerDTO entity, Guid id)
+        public async Task<Customer> UpdateCustomerAsync(UpdateCustomerDTO entity, Guid id)
         {
             Customer replaceCustomer = await _customerRepository.GetSingleAsync(id);
             if (entity.Name != null) replaceCustomer.Name = entity.Name;
@@ -60,7 +57,7 @@ namespace clouddb_sdv_2022.Modules.Customers
 
             _customerRepository.Update(replaceCustomer);
             await _customerRepository.CommitAsync();
-            return;
+            return replaceCustomer;
         }
     }
 }

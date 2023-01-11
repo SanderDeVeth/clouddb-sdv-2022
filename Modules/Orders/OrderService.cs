@@ -14,19 +14,48 @@ namespace clouddb_sdv_2022.Modules.Orders
             _customerRepository = customerRepository;
         }
 
-        public Task<Order> GetOrderAsync(Guid Id)
+        public async Task CommitAsync()
         {
-            throw new NotImplementedException();
+            await _orderRepository.CommitAsync();
         }
 
-        public Task<Order> PostOrderAsync(PostOrderDTO data)
+        public Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            Order deleteOrder = new Order
+            {
+                Id = id
+            };
+            _orderRepository.Delete(deleteOrder);
+            return _orderRepository.CommitAsync();
         }
 
-        public Task<Order> ShipOrderAsync(Guid Id)
+        public async Task<Order> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _orderRepository.GetSingleAsync(id);
+        }
+
+        public async Task<Order> AddOrderAsync(AddOrderDTO data)
+        {
+            Order newOrder = new Order
+            {
+                Id = Guid.NewGuid(),
+                Customer = await _customerRepository.GetSingleAsync(data.CustomerId),
+                CustomerId = data.CustomerId,
+                OrderItems = new List<OrderItem>(),
+                OrderDate = DateOnly.FromDateTime(DateTime.Now),
+                ShippingDate = null
+            };
+            _orderRepository.Add(newOrder);
+            await _orderRepository.CommitAsync();
+            return newOrder;
+        }
+
+        public async Task<Order> ShipOrderAsync(Guid Id)
+        {
+            Order replaceOrder = await _orderRepository.GetSingleAsync(Id);
+            replaceOrder.ShippingDate = DateOnly.FromDateTime(DateTime.Now);
+            _orderRepository.Update(replaceOrder);
+            return replaceOrder;
         }
     }
 }

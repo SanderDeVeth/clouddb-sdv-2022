@@ -15,7 +15,7 @@ namespace  clouddb_sdv_2022.Modules.Reviews
         public virtual Product Product { get; set; }
     }
     
-    public class PostReviewDTO
+    public class AddReviewDTO
     {
         public Guid Id { get; set; }
         public Guid CustomerId { get; set; }

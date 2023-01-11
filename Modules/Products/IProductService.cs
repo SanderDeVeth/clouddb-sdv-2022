@@ -8,10 +8,7 @@ namespace clouddb_sdv_2022.Modules.Products
 {
     public interface IProductService : IBaseService<Product>
     {
-        
-        // Task<Product> AddProductAsync(AddProductDTO data);
-        // Task<Product> UpdateProductAsync(Guid Id);
-        // Task RemoveProductAsync(Guid Id);
-        // Task<Product> GetProductAsync(Guid Id);
+        Task<Product> AddProductAsync(AddProductDTO data);
+        Task<Product> UpdateProductAsync(UpdateProductDTO data, Guid Id);
     }
 }

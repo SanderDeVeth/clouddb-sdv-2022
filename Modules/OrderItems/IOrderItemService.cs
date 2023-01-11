@@ -8,7 +8,7 @@ namespace clouddb_sdv_2022.Modules.OrderItems
 {
     public interface IOrderItemService : IBaseService<OrderItem>
     {
-        Task AddAsync(AddOrderItemDTO entity);
-        Task UpdateAsync(UpdateOrderItemDTO entity, Guid id);
+        Task<OrderItem> AddOrderItemAsync(AddOrderItemDTO entity);
+        Task<OrderItem> UpdateOrderItemAsync(UpdateOrderItemDTO entity, Guid id);
     }
 }

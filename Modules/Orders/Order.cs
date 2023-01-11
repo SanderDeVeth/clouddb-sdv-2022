@@ -10,7 +10,7 @@ namespace  clouddb_sdv_2022.Modules.Orders
         public Guid CustomerId { get; set; }
         public DateOnly OrderDate { get; set; }
         public DateOnly? ShippingDate { get; set; }
-        public virtual ICollection<OrderItem> Items { get; set; }
+        public virtual ICollection<OrderItem> OrderItems { get; set; }
 
         public bool OrderProcessed()
         {
@@ -23,11 +23,11 @@ namespace  clouddb_sdv_2022.Modules.Orders
 
         public decimal GetTotal()
         {
-            return Items.Sum(i => i.GetTotal());
+            return OrderItems.Sum(i => i.GetTotal());
         }
     }
 
-    public class PostOrderDTO
+    public class AddOrderDTO
     {
         public Guid CustomerId { get; set; }
     }

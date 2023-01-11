@@ -45,7 +45,7 @@ namespace clouddb_sdv_2022.Modules.Reviews
             return replaceReview;
         }
 
-        public async Task<Review> PostReviewAsync(PostReviewDTO data)
+        public async Task<Review> AddReviewAsync(AddReviewDTO data)
         {
             var customer = await _customerRepository.GetSingleAsync(data.CustomerId);
             if (customer == null)
@@ -66,6 +66,15 @@ namespace clouddb_sdv_2022.Modules.Reviews
             _reviewRepository.Add(Review);
             await _customerRepository.CommitAsync();
             return Review;
+        }
+
+        public async Task<Review> UpdateReviewAsync(UpdateReviewDTO data, Guid Id)
+        {
+            Review replaceReview = await _reviewRepository.GetSingleAsync(Id);
+            if (data.Rating != null) replaceReview.Rating = (int)data.Rating;
+            if (data.ReviewText != null) replaceReview.ReviewText = data.ReviewText;
+            await _reviewRepository.CommitAsync();
+            return replaceReview;
         }
     }
 }

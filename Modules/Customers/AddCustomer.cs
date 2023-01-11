@@ -1,34 +1,35 @@
 using System.Net;
+using clouddb_sdv_2022.Modules.Customers;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.Extensions.Logging;
 
-namespace clouddb_sdv_2022.Modules.Reviews
+namespace clouddb_sdv_2022.Modules.Customers
 {
-    public class PostReview
+    public class AddCustomer
     {
-        private readonly IReviewService _reviewService;
+        private readonly ICustomerService _customerService;
 
-        public PostReview(IReviewService reviewService)
+        public AddCustomer(ICustomerService customerService)
         {
-            _reviewService = reviewService;
+            _customerService = customerService;
         }
 
-        [Function("AddReview")]
+        [Function(nameof(AddCustomer))]
         public async Task<HttpResponseData> RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData req)
         {
-            var postReview = await req.ReadFromJsonAsync<PostReviewDTO>();
+            AddCustomerDTO addCustomer = await req.ReadFromJsonAsync<AddCustomerDTO>();
             dynamic response;
-            if(postReview == null)
+            if (addCustomer == null)
             {
                 response = req.CreateResponse(HttpStatusCode.BadRequest);
                 await response.WriteAsJsonAsync(new { message = "Invalid request body" });
                 return response;
             }
 
-            // Happy path
-            await _reviewService.PostReviewAsync(postReview);
+            await _customerService.AddCustomerAsync(addCustomer);
             response = req.CreateResponse(HttpStatusCode.Created);
-            await response.WriteAsJsonAsync(postReview);
+            await response.WriteAsJsonAsync(addCustomer);
             return response;
         }
     }

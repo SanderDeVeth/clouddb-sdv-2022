@@ -15,7 +15,7 @@ var host = new HostBuilder()
         // add Modules\Customer\
         services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddScoped<ICustomerService, CustomerService>();
-        services.AddScoped<PostCustomer>();
+        services.AddScoped<AddCustomer>();
 
         // add Modules\Order\
         services.AddScoped<IOrderRepository, OrderRepository>();
@@ -33,8 +33,8 @@ var host = new HostBuilder()
 
         // add Modules\Review
         services.AddScoped<IReviewRepository, ReviewRepository>();
-        services.AddScoped<IReviewService>();
-        services.AddScoped<PostReview>();
+        services.AddScoped<IReviewService, ReviewService>();
+        services.AddScoped<AddReview>();
 
     })
     .Build();

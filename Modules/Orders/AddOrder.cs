@@ -13,12 +13,13 @@ namespace clouddb_sdv_2022.Modules.Orders
             _orderService = orderService;
         }
 
-        [Function("AddOrder")]
+        [Function(nameof(AddOrder))]
+        [QueueOutput("new-orders-queue", Connection = "AzureWebJobsStorage")]
         public async Task<HttpResponseData> RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData req)
         {
-            var postOrder = await req.ReadFromJsonAsync<PostOrderDTO>();
+            var addOrder = await req.ReadFromJsonAsync<AddOrderDTO>();
             dynamic response;
-            if(postOrder == null)
+            if(addOrder == null)
             {
                 response = req.CreateResponse(HttpStatusCode.BadRequest);
                 await response.WriteAsJsonAsync(new { message = "Invalid request body" });
@@ -26,9 +27,9 @@ namespace clouddb_sdv_2022.Modules.Orders
             }
 
             // Happy path
-            await _orderService.PostOrderAsync(postOrder);
+            await _orderService.AddOrderAsync(addOrder);
             response = req.CreateResponse(HttpStatusCode.Created);
-            await response.WriteAsJsonAsync(postOrder);
+            await response.WriteAsJsonAsync(addOrder);
             return response;
         }
     }

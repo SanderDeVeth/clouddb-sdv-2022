@@ -15,7 +15,7 @@ namespace clouddb_sdv_2022.Modules.OrderItems
             _orderItemRepository = orderItemRepository;
         }
 
-        public async Task AddAsync(AddOrderItemDTO entity)
+        public async Task<OrderItem> AddOrderItemAsync(AddOrderItemDTO entity)
         {
             OrderItem newOrderItem = new OrderItem{
                 Id = Guid.NewGuid(),
@@ -25,7 +25,7 @@ namespace clouddb_sdv_2022.Modules.OrderItems
             };
             _orderItemRepository.Add(newOrderItem);
             await _orderItemRepository.CommitAsync();
-            return;
+            return newOrderItem;
         }
 
         public async Task CommitAsync()
@@ -40,7 +40,6 @@ namespace clouddb_sdv_2022.Modules.OrderItems
             };
             _orderItemRepository.Delete(deleteOrderItem);
             await _orderItemRepository.CommitAsync();
-            return;
         }
 
         public async Task<OrderItem> GetAsync(Guid id)
@@ -48,7 +47,7 @@ namespace clouddb_sdv_2022.Modules.OrderItems
             return await _orderItemRepository.GetSingleAsync(id);
         }
 
-        public async Task UpdateAsync(UpdateOrderItemDTO entity, Guid id)
+        public async Task<OrderItem> UpdateOrderItemAsync(UpdateOrderItemDTO entity, Guid id)
         {
             OrderItem replaceOrderItem = await _orderItemRepository.GetSingleAsync(id);
             replaceOrderItem.OrderId = entity.OrderId;
@@ -56,7 +55,7 @@ namespace clouddb_sdv_2022.Modules.OrderItems
             replaceOrderItem.Quantity = (int)entity.Quantity;
             _orderItemRepository.Update(replaceOrderItem);
             await _orderItemRepository.CommitAsync();
-            return;
+            return replaceOrderItem;
         }
     }
 }

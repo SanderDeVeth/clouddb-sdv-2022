@@ -30,7 +30,7 @@ namespace clouddb_sdv_2022
                 .WithOne(o => o.Customer);
 
             modelBuilder.Entity<Order>()
-                .HasMany(o => o.Items)
+                .HasMany(o => o.OrderItems)
                 .WithOne(i => i.Order);
             modelBuilder.Entity<Order>()
                 .HasOne(o => o.Customer);
