@@ -1,13 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using clouddb_sdv_2022.Modules.Customers;
 using clouddb_sdv_2022.Modules.Orders;
 using clouddb_sdv_2022.Modules.OrderItems;
 using clouddb_sdv_2022.Modules.Reviews;
 using clouddb_sdv_2022.Modules.Products;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Azure.Identity;
 
 namespace clouddb_sdv_2022
 {
@@ -55,7 +53,7 @@ namespace clouddb_sdv_2022
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            string connstring = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
+            // string connstring = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
             builder.UseCosmos(
                Environment.GetEnvironmentVariable("ConnectionString:AccountEndpoint"),
                Environment.GetEnvironmentVariable("ConnectionString:AccountKey"),
@@ -63,7 +61,7 @@ namespace clouddb_sdv_2022
             );
 
             // ConfigWrapper config = new(new ConfigurationBuilder()
-            //     .AddAzureKeyVault(new Uri("https://key-verfsolutions002.vault.azure.net/"), new DefaultAzureCredential())
+            //     .AddAzureKeyVault(new Uri("https://clouddb-sdv-2022-kv.vault.azure.net/"), new DefaultAzureCredential())
             //     .Build());
 
             // Environment.SetEnvironmentVariable("DBNAME", config.DBNAME);
@@ -83,5 +81,32 @@ namespace clouddb_sdv_2022
 
             base.OnConfiguring(builder);
         }
+
+        // public class ConfigWrapper
+        // {
+        //     private readonly IConfiguration _config;
+
+        //     public ConfigWrapper(IConfiguration config)
+        //     {
+        //         _config = config;
+
+        //     }
+
+        //     public string DBNAME
+        //     {
+        //         get { return _config["DBNAME"]; }
+        //     }
+
+        //     public string DBHost
+        //     {
+        //         get { return _config["DBHost"]; }
+
+        //     }
+
+        //     public string DBCONNECTION
+        //     {
+        //         get { return _config["DBCONNECTION"]; }
+        //     }
+        // }
     }
 }

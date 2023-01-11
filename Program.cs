@@ -5,6 +5,8 @@ using clouddb_sdv_2022.Modules.Products;
 using clouddb_sdv_2022.Modules.Orders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+using Azure.Identity;
 
 var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults()
@@ -25,11 +27,9 @@ var host = new HostBuilder()
         services.AddScoped<IOrderItemRepository, OrderItemRepository>();
         services.AddScoped<IOrderItemService, OrderItemService>();
 
-
         // add Modules\Product
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IProductService, ProductService>();
-        // services.AddScoped<PostProduct>();
 
         // add Modules\Review
         services.AddScoped<IReviewRepository, ReviewRepository>();
