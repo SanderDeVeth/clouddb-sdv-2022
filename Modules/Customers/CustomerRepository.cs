@@ -10,7 +10,6 @@ namespace clouddb_sdv_2022.Modules.Customers
     {
         public CustomerRepository(WidgetAndCoContext context) : base(context)
         {
-
         }
     }
 }

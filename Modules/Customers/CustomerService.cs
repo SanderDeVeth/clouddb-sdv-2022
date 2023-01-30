@@ -43,7 +43,7 @@ namespace clouddb_sdv_2022.Modules.Customers
             await _customerRepository.CommitAsync();
         }
 
-        public async Task<Customer> GetAsync(Guid id)   
+        public async Task<Customer> GetAsync(Guid id)
         {
             return await _customerRepository.GetSingleAsync(id);
         }

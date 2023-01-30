@@ -9,7 +9,6 @@ namespace clouddb_sdv_2022.Modules.Products
     {
         public ProductRepository(WidgetAndCoContext context) : base(context)
         {
-
         }
     }
 }

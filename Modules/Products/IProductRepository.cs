@@ -7,6 +7,5 @@ namespace clouddb_sdv_2022.Modules.Products
 {
     public interface IProductRepository : IBaseRepository<Product>
     {
-
     }
 }

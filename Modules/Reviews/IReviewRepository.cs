@@ -8,6 +8,5 @@ namespace clouddb_sdv_2022.Modules.Reviews
 {
     public interface IReviewRepository : IBaseRepository<Review>
     {
-
     }
 }

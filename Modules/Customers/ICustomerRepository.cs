@@ -8,6 +8,5 @@ namespace clouddb_sdv_2022.Modules.Customers
 {
     public interface ICustomerRepository : IBaseRepository<Customer>
     {
-
     }
 }
