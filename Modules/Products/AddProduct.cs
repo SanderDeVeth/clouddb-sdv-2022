@@ -2,6 +2,7 @@ using System.Net;
 using clouddb_sdv_2022.Modules.Products;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
 
 namespace clouddb_sdv_2022
@@ -18,6 +19,11 @@ namespace clouddb_sdv_2022
         }
 
         [Function(nameof(AddProduct))]
+        [OpenApiOperation(operationId: "addProduct", tags: new[] { "Products" }, Summary = "Add a new product", Description = "This can only be done by the logged in user.")]
+        [OpenApiRequestBody("application/json", typeof(AddProductDTO), Description = "Product object that needs to be added to the store")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.Created, contentType: "application/json", bodyType: typeof(AddProductDTO), Description = "Product added")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(AddProductDTO), Description = "Invalid input")]
+        [OpenApiResponseWithoutBody(statusCode: HttpStatusCode.InternalServerError, Description = "Internal server error")]
         public async Task<HttpResponseData> RunAsync([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequestData req)
         {
             var addProduct = await req.ReadFromJsonAsync<AddProductDTO>();

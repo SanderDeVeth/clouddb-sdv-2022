@@ -7,9 +7,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Azure.Identity;
+using Microsoft.Azure.Functions.Worker.Extensions.OpenApi.Extensions;
 
 var host = new HostBuilder()
-    .ConfigureFunctionsWorkerDefaults()
+    .ConfigureFunctionsWorkerDefaults(worker => worker.UseNewtonsoftJson())
+    .ConfigureOpenApi()
     .ConfigureServices(services =>
     {
         // add Modules\Customer\
@@ -35,7 +37,6 @@ var host = new HostBuilder()
         services.AddScoped<IReviewRepository, ReviewRepository>();
         services.AddScoped<IReviewService, ReviewService>();
         services.AddScoped<AddReview>();
-
     })
     .Build();
 

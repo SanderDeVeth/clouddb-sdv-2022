@@ -9,7 +9,7 @@ namespace clouddb_sdv_2022.Modules.OrderItems
     public class OrderItemService : IOrderItemService
     {
         private readonly IOrderItemRepository _orderItemRepository;
-        
+
         public OrderItemService(IOrderItemRepository orderItemRepository)
         {
             _orderItemRepository = orderItemRepository;

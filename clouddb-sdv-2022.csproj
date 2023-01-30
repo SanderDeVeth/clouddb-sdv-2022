@@ -18,6 +18,8 @@
     <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.1"/>
     <PackageReference Include="Microsoft.Azure.Functions.Worker.ApplicationInsights" Version="1.0.0-preview3"/>
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.OpenApi" Version="2.0.0-preview2" />
+    <PackageReference Include="Microsoft.OpenApi" Version="1.5.0" />
     <PackageReference Include="Azure.Security.KeyVault.Secrets" Version="4.4.0"/>
     <PackageReference Include="Azure.Identity" Version="1.8.0"/>
   </ItemGroup>
@@ -30,7 +32,7 @@
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
+  <!-- <ItemGroup>
     <Using Include="System.Threading.ExecutionContext" Alias="ExecutionContext"/>
-  </ItemGroup>
+  </ItemGroup> -->
 </Project>
