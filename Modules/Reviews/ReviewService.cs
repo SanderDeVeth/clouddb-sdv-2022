@@ -21,7 +21,8 @@ namespace clouddb_sdv_2022.Modules.Reviews
 
         public async Task DeleteAsync(Guid id)
         {
-            Review deleteReview = new Review{
+            Review deleteReview = new()
+            {
                 Id = id
             };
             _reviewRepository.Delete(deleteReview);
@@ -53,7 +54,7 @@ namespace clouddb_sdv_2022.Modules.Reviews
                 throw new Exception("Customer not found");
             }
 
-            var Review = new Review
+            var review = new Review
             {
                 Id = Guid.NewGuid(),
                 Customer = customer,
@@ -62,10 +63,10 @@ namespace clouddb_sdv_2022.Modules.Reviews
                 Rating = data.Rating,
                 ReviewText = data.ReviewText,
             };
-            customer.Reviews.Add(Review);
-            _reviewRepository.Add(Review);
+            customer.Reviews.Add(review);
+            _reviewRepository.Add(review);
             await _customerRepository.CommitAsync();
-            return Review;
+            return review;
         }
 
         public async Task<Review> UpdateReviewAsync(UpdateReviewDTO data, Guid Id)

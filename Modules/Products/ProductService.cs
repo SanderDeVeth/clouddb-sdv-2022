@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace clouddb_sdv_2022.Modules.Products
 {
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-        private readonly IBlobStorageService _blobStorageService;
 
         public ProductService(IProductRepository productRepository)
         {
@@ -17,7 +11,8 @@ namespace clouddb_sdv_2022.Modules.Products
 
         public async Task<Product> AddProductAsync(AddProductDTO data)
         {
-            Product newProduct = new Product{
+            Product newProduct = new()
+            {
                 Id = Guid.NewGuid(),
                 Name = data.Name,
                 Price = (decimal)data.Price,
@@ -37,7 +32,8 @@ namespace clouddb_sdv_2022.Modules.Products
 
         public async Task DeleteAsync(Guid id)
         {
-            Product deleteProduct = new Product{
+            Product deleteProduct = new()
+            {
                 Id = id
             };
             _productRepository.Delete(deleteProduct);

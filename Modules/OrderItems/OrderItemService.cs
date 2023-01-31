@@ -17,7 +17,8 @@ namespace clouddb_sdv_2022.Modules.OrderItems
 
         public async Task<OrderItem> AddOrderItemAsync(AddOrderItemDTO entity)
         {
-            OrderItem newOrderItem = new OrderItem{
+            OrderItem newOrderItem = new()
+            {
                 Id = Guid.NewGuid(),
                 OrderId = entity.OrderId,
                 ProductId = entity.ProductId,
@@ -35,7 +36,8 @@ namespace clouddb_sdv_2022.Modules.OrderItems
 
         public async Task DeleteAsync(Guid id)
         {
-            OrderItem deleteOrderItem = new OrderItem{
+            OrderItem deleteOrderItem = new()
+            {
                 Id = id
             };
             _orderItemRepository.Delete(deleteOrderItem);

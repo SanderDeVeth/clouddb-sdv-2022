@@ -21,7 +21,7 @@ namespace clouddb_sdv_2022.Modules.Orders
 
         public Task DeleteAsync(Guid id)
         {
-            Order deleteOrder = new Order
+            Order deleteOrder = new()
             {
                 Id = id
             };
@@ -36,7 +36,7 @@ namespace clouddb_sdv_2022.Modules.Orders
 
         public async Task<Order> AddOrderAsync(AddOrderDTO data)
         {
-            Order newOrder = new Order
+            Order newOrder = new()
             {
                 Id = Guid.NewGuid(),
                 Customer = await _customerRepository.GetSingleAsync(data.CustomerId),

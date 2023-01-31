@@ -36,7 +36,8 @@ namespace clouddb_sdv_2022.Modules.Customers
 
         public async Task DeleteAsync(Guid id)
         {
-            Customer deleteCustomer = new Customer{
+            Customer deleteCustomer = new()
+            {
                 Id = id
             };
             _customerRepository.Delete(deleteCustomer);
